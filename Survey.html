@@ -1,0 +1,31 @@
+{% extends "global/Page.html" %}
+{% load otree static %}
+
+{% block title %}
+    Survey
+{% endblock %}
+
+{% block content %}
+
+    <p><b>Before we conclude, please answer the following questions:</b></p>
+
+        {{ formfield 'inequality_Stan' }}
+        {{ formfield 'luck_vs_effort' }}
+
+    <p><b>Below, you see statements which you can agree or disagree with. Indicate to what extent you agree or disagree with each statement.</b></p>
+
+    {{ formfield 'inequality_perception' }}
+    {{ formfield 'rich_merit' }}
+    {{ formfield 'poor_lazy' }}
+    {{ formfield 'escape_poverty_WVS' }}
+    {{ formfield 'inequality_useful' }}
+    {{ formfield 'social_mobility2' }}
+
+    <br>
+
+    {{ formfield 'politics_GSS' }}
+    {{ formfield 'social_class' }}
+
+    {% next_button %}
+
+{% endblock %}

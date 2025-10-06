@@ -1,0 +1,35 @@
+{% block styles  %}
+    <link href="{% static 'sliders.css' %}" rel="stylesheet"/>
+{% endblock %}
+
+{{ block title }}
+Slider task
+{{ endblock }}
+
+{{ block content }}
+
+<p id="slider-score2">
+    <b>Current slider score: <span id="slider-score" style="color: green"></span> &emsp;Starting line: {{ player.capital_draw|to0 }}&emsp;Multiplier: between 0 and
+    {% if player.current_treatment == 'Low-High' %}20{% else %}10{% endif %} &emsp; Target: {{ C.TARGET }}</b>
+</p>
+    <progress id="progress-bar" max="{{ params.num_sliders }}" value="0"></progress>
+
+<div class="d-flex flex-column align-items-center">
+    <canvas id="canvas" class="m-2"></canvas>
+
+    {% next_button %}
+
+    <br>
+    {{ if DEBUG }}
+    <button type="button" id="cheat-btn" class="btn btn-dark">Cheat</button>
+    {{ endif }}
+</div>
+<br>
+{{ endblock }}
+
+{{ block scripts }}
+
+<script src="{{ static 'sliders.js' }}"></script>
+
+{{ if DEBUG }}<script src="{{ static 'sliders_cheating.js' }}"></script>{{ endif }}
+{{ endblock }}

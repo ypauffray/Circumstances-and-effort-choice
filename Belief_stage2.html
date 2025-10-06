@@ -1,0 +1,112 @@
+{% extends "global/Page.html" %}
+{% load otree static %}
+
+{% block styles %}
+    <link href="{% static 'mpl/css/custom.css' %}" rel="stylesheet" xmlns="http://www.w3.org/1999/html"/>
+{% endblock %}
+
+{% block title %}
+    Decision
+{% endblock %}
+
+{% block content %}
+
+    <p>Imagine that we randomly select two participants from a previous round.
+        <b>You learn that after completing the slider task, one participant reached the target while
+            the other didn't.</b></p>
+    <p>As a reward, we give a bonus of {{ C.BONUS }} points to the participant who reached the target.
+        The participant who didn't reach the target receives nothing.
+        <br>
+        <br>
+        In the summary table below, you will find the participant starting line and multiplier ranges for the round in which they are selected.
+
+    <table class="table table-striped table-hover" style="text-align: center">
+        <thead style="background-color: #dcdcff"><th>Reached the target</th><th>Starting line</th><th>Multiplier</th><th>Bonus before redistribution</th></thead>
+            <tr style="color: forestgreen">
+                <td>Yes</td>
+                {% if player.current_treatment == 'High-Low' %}
+                    <td><b>Between {{ C.CAPITAL_LB_HIGH }} and {{ C.CAPITAL_UB_HIGH }}</b></td>
+                {% else %}
+                    <td><b>{{ C.CAPITAL_MEAN }}</b></td>
+                {% endif %}
+                {% if player.current_treatment == 'Low-High' %}
+                    <td><b>Between {{ C.SKILL_LB }} and {{C.SKILL_UB_HIGH}}</b></td>
+                {% else %}
+                    <td><b>Between {{ C.SKILL_LB }} and {{C.SKILL_UB_LOW}}</b></td>
+                {% endif %}
+                <td>100 points</td></tr>
+            <tr  style="color: orangered">
+                <td>No</td>
+                {% if player.current_treatment == 'High-Low' %}
+                    <td><b>Between {{ C.CAPITAL_LB_HIGH }} and {{ C.CAPITAL_UB_HIGH }}</b></td>
+                {% else %}
+                    <td><b>{{ C.CAPITAL_MEAN }}</b></td>
+                {% endif %}
+                {% if player.current_treatment == 'Low-High' %}
+                    <td><b>Between {{ C.SKILL_LB }} and {{C.SKILL_UB_HIGH}}</b></td>
+                {% else %}
+                    <td><b>Between {{ C.SKILL_LB }} and {{C.SKILL_UB_LOW}}</b></td>
+                {% endif %}
+                <td>0 points</td></tr>
+    </table>
+    </br>
+
+    <p>As a reminder, in Stage 1 you provided the following guesses depending on whether participants reached or missed the target
+        when facing these starting line and multiplier ranges:</p>
+
+    <table class="table table-striped table-hover" style="text-align: center">
+        <thead style="background-color: #dcdcff"><th>Reached the target</th><th>Average slider score guess</th>{% if player.current_treatment == 'High-Low' %}<th>Average starting line guess</th>{% endif %}<th>Average multiplier guess</th></thead>
+            <tr style="color: forestgreen">
+                <td>Yes</td>
+                <td>{{ belief_effort_reach }}</td>
+                {% if player.current_treatment == 'High-Low' %}
+                    <td>{{ belief_capital_reach }}</td>
+                {% endif %}
+                <td>{{ belief_skill_reach }}</td></tr>
+            <tr  style="color: orangered">
+                <td>No</td>
+                <td>{{ belief_effort_miss }}</td>
+                {% if player.current_treatment == 'High-Low' %}
+                    <td>{{ belief_capital_miss }}</td>
+                {% endif %}
+                <td>{{ belief_skill_miss }}</td></tr></tr>
+    </table>
+
+
+    <br>
+
+    <h5><b>Reward redistribution</b></h5>
+
+    <p>If you want, you can redistribute the bonus between the two participants.</p>
+    Move the bar to decide how to redistribute the points between the participants.</p>
+
+    0 <input type="range" name="send_loser" min="0" max="{{ C.BONUS }}" value="0" step="5" oninput="updateDescription(this)"> {{ C.BONUS }}
+        <p id="Redistribute" style="color: royalblue"></p>
+
+    <input type="hidden" name="check_send_loser" value="" id="id_check_send_loser"/>
+
+    </div>
+
+    {% next_button %}
+
+{% endblock %}
+
+{% block scripts %}
+
+<script>
+    let redistrib = document.getElementById('Redistribute');
+    function updateDescription(input) {
+        let send_loser = parseInt(input.value);
+        let give_winner = js_vars.bonus - send_loser;
+        if (send_loser == 0) {
+            redistrib.innerText = `I do not want to redistribute. The participant who reached the target keeps ${give_winner} points.`;
+        }
+        else if (send_loser != 0) {
+            redistrib.innerText = `I transfer ${send_loser} points from the participant who reached the target to the other participant. The participant who reached the target keeps ${give_winner} points.`;
+        }
+        document.getElementById('id_check_send_loser').value = 1
+    }
+
+</script>
+
+{% endblock %}

@@ -1,0 +1,133 @@
+{% extends "global/Page.html" %}
+{% load staticfiles otree %}
+{% load i18n %}
+
+
+{# ****************************************************************************************************************** #}
+{# *** STYLES *** #}
+{# ****************************************************************************************************************** #}
+{% block styles %}
+    <link href="{% static 'mpl/css/custom.css' %}" rel="stylesheet" xmlns="http://www.w3.org/1999/html"/>
+{% endblock %}
+
+
+{# ****************************************************************************************************************** #}
+{# *** TITLE *** #}
+{# ****************************************************************************************************************** #}
+{% block title %}
+    {% trans "Instructions" %}
+{% endblock %}
+
+
+{# ****************************************************************************************************************** #}
+{# *** CONTENT *** #}
+{# ****************************************************************************************************************** #}
+{% block content %}
+
+    <h4><b>Overview</b></h4>
+    <div class="wrapper instructions"; style="border-radius: 10px; max-width: 1000px">
+        <p>There are <b>three stages</b> in this experiment. We will give you instructions at the
+            beginning of each stage.
+            <br>
+            <br>
+            This <b>first stage consists of {{ C.NUM_ROUNDS_STG1 }} rounds</b>.
+            During each round, you will perform the same task.
+            <br>
+            <br>
+            The task involves a screen with {{ C.NUM_SLIDERS }} sliders.
+            Each slider is initially positioned randomly.
+            You can use the mouse in any way you like to move each slider.
+            You can readjust the position of each slider as many times as you like.
+            Your <i>slider score</i> will be determined by the number of sliders that are positioned exactly in the middle when you decide to stop working on the task.
+            A green dot will appear on a slider when it is correctly positioned. How many sliders you decide to correctly position is up to you.
+            You are not expected to correctly position all the sliders in each task.
+            <br>
+            <br>
+            You may take as much time as you want working on a task,
+            but you have 45 minutes to finish the {{ C.NUM_ROUNDS_STG1 }} rounds of the first stage.
+            A timer will indicate how much time you have left. If you finish early,
+            you may use your phone silently while others finish the stage.
+        </p>
+
+        <p>In each round,
+            <b>if you reach a production target of {{ C.TARGET }} you will receive {{ C.REWARD }} points.
+                If you don't reach the target you will receive 0 points.</b>
+            Your production is calculated as follows:</br>
+            <ol>
+                <li>First, in each round you will receive a starting line, which is a randomly selected integer
+            with a minimum value of {{ C.CAPITAL_LB_HIGH }} but never greater than the target. You will always know
+            what your starting line is before adjusting the sliders.</li>
+                <li> Next you will receive a multiplier value, which is a randomly selected integer with a minimum value
+            of {{ C.SKILL_LB }} but never more than {{ C.SKILL_UB_HIGH }}. Unlike the starting line, you will NOT know the value of your multiplier before adjusting the sliders.</li>
+            <li>After you complete the task, your production will be calculated as follows: first we will multiply your slider score (the number of sliders correctly positioned) by your multiplier.
+                Then we will add your starting line. The formula is as follows:</li>
+            </ol>
+            <div class="wrapper instructions"; style="text-align:center;background-color:pink;border-radius: 10px; max-width: 800px">
+            <p><b>Production = Starting line + (Multiplier * Slider score)</b></p>
+            </div>
+    </div>
+
+    <h4><b>Examples</b></h4>
+    <div class="wrapper instructions"; style="border-radius: 10px; max-width: 1000px">
+        <p>
+        <b>Example 1:</b><br>
+        Suppose your randomly selected starting line (which you will know) is <b><span style="color: orangered">1500</span></b>, and that
+            your randomly selected multiplier (which you won't know before adjusting the sliders) is
+            <b><span style="color: royalblue">5.</span></b>
+            <br>
+            <br>
+            If you correctly position 100 sliders, your slider score is <b><span style="color: darkgreen">100</span></b>.
+            Then your production will be <b><span style="color: orangered">1500</span></b> + <b><span style="color: royalblue">5</span></b>*<b><span style="color: darkgreen">100</span></b> = 2000.
+            Since your production is less than the target production of {{ C.TARGET }}, you miss the target and receive 0 points.
+            <br>
+            <br>
+        Instead, if you correctly position 250 sliders, your slider score is <b><span style="color: darkgreen">250</span></b>.
+            Then your production will be <b><span style="color: orangered">1500</span></b> + <b><span style="color: royalblue">5</span></b>*<b><span style="color: darkgreen">250</span></b> = 2750.
+            Since your production is equal to the target of {{ C.TARGET }}, you reach the target and receive {{ C.REWARD }} points.<br/>
+            <br>
+            As shown in this example, you might not need to correctly position all {{ C.NUM_SLIDERS }} sliders to reach the target.
+        </p>
+
+        <b>Example 2:</b><br>
+        Suppose your randomly selected starting line is <b><span style="color: orangered">500</span></b>,
+        and that you correctly position 300 sliders, so your slider score is <b><span style="color: darkgreen">300</span></b>.
+            <br>
+            <br>
+        If your randomly selected multiplier is <b><span style="color: royalblue">5</span></b>,
+        then your production will be <b><span style="color: orangered">500</span></b> + <b><span style="color: royalblue">5</span></b>*<b><span style="color: darkgreen">300</span></b> = 2000.
+        Since your production is less than the target, you receive 0 points.
+        </p>
+        Instead, if your randomly selected multiplier is <b><span style="color: royalblue">10</span></b>,
+        then your production will be <b><span style="color: orangered">500</span></b> + <b><span style="color: royalblue">10</span></b>*<b><span style="color: darkgreen">300</span></b> = 3500.
+       Since your production is greater than the target, you receive {{ C.REWARD }} points.
+        </p>
+    As shown in this example, you might not reach the target even if you correctly position all the {{ C.NUM_SLIDERS }} sliders.
+        </div>
+    </div>
+
+    <h4><b>Starting line and multiplier</b></h4>
+    <div class="wrapper instructions"; style="border-radius: 10px; max-width: 1000px">
+        <b>Ranges</b>
+        <p>You will always be told the possible ranges for your starting line and multiplier.
+            But the ranges may change depending on the round, so it is important to check these at the beginning of each round
+                because they will affect your production value.</p>
+        <span style="color: royalblue"><b><p>In some rounds, your multiplier will be selected between {{ C.SKILL_LB }} and {{ C.SKILL_UB_LOW }}.
+            In other rounds it will be selected between {{ C.SKILL_LB }} and {{ C.SKILL_UB_HIGH }}.</p>
+            <p>In some rounds, your starting line is set at {{ C.CAPITAL_MEAN }}.
+                In other rounds it will be selected between {{ C.CAPITAL_LB_HIGH }} and {{ C.CAPITAL_UB_HIGH }}.
+            </p></b></span>
+        <b>Random selection</b>
+        <br>
+        <p>When your multiplier or starting line is randomly selected in a given range, <span style="color: royalblue"><b>each number in the range
+            (boundary points included) has an equal probability of being selected.</b></span></p>
+
+            <p> For instance, if your multiplier is randomly selected between {{ C.SKILL_LB }} and {{ C.SKILL_UB_LOW }},
+                then each number (0, 1,..., 9, {{ C.SKILL_UB_LOW }}) has an equal chance (1/11) of being selected.</p>
+                If your starting line is randomly selected between 0 and {{ C.CAPITAL_UB_HIGH }},
+                then each number (0, 1,..., 2499, {{ C.CAPITAL_UB_HIGH }}) has an equal chance (1/2501) of being selected.</p>
+    </div>
+
+    {% next_button %}
+
+{% endblock %}
+

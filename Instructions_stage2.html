@@ -1,0 +1,40 @@
+{% extends "global/Page.html" %}
+{% load staticfiles otree %}
+{% load i18n %}
+
+
+{# ****************************************************************************************************************** #}
+{# *** STYLES *** #}
+{# ****************************************************************************************************************** #}
+{% block styles %}
+    <link href="{% static 'mpl/css/custom.css' %}" rel="stylesheet" xmlns="http://www.w3.org/1999/html"/>
+{% endblock %}
+
+
+{# ****************************************************************************************************************** #}
+{# *** TITLE *** #}
+{# ****************************************************************************************************************** #}
+{% block title %}
+    {% trans "Stage 2" %}
+{% endblock %}
+
+
+{# ****************************************************************************************************************** #}
+{# *** CONTENT *** #}
+{# ****************************************************************************************************************** #}
+{% block content %}
+
+<div class="wrapper instructions">
+        <p>
+            In the next screens, you will be presented with a series of decisions to make.
+            Each decision involves sharing a bonus of {{ C.BONUS }} points between two participants.<br>
+            <br>
+            These choices are hypothetical, meaning they won't affect your earnings
+            or the earnings of other participants. However, try to answer the questions as if they had real consequences.
+        </p>
+</div>
+
+    {% next_button %}
+
+{% endblock %}
+

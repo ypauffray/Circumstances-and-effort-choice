@@ -1,0 +1,330 @@
+{% extends "global/Page.html" %}
+{% load staticfiles otree %}
+{% load i18n %}
+
+
+{# ****************************************************************************************************************** #}
+{# *** STYLES *** #}
+{# ****************************************************************************************************************** #}
+{% block styles %}
+    <link href="{% static 'mpl/css/custom.css' %}" rel="stylesheet" xmlns="http://www.w3.org/1999/html"/>
+{% endblock %}
+
+
+{# ****************************************************************************************************************** #}
+{# *** TITLE *** #}
+{# ****************************************************************************************************************** #}
+{% block title %}
+    {% trans "Stage 3" %}
+{% endblock %}
+
+
+{# ****************************************************************************************************************** #}
+{# *** CONTENT *** #}
+{# ****************************************************************************************************************** #}
+{% block content %}
+
+    <div class="wrapper instructions"; style="border-radius: 10px; max-width: 1000px">
+
+            We would now like to give you additional information regarding how likely it is to reach
+            the target given different combinations of starting line and slider score. This is displayed in the table below,
+            for the case that the multiplier value is between 0 and {{ C.SKILL_UB_LOW }}.
+            <br>
+            <br>
+            {% if C.TARGET == 400 %}
+            <p style="text-align:center;"><img src="https://i.imgur.com/yKukbJj.jpg" width="700px" class="centerImage"></p>
+            This table tells you, for instance, that participants who correctly position 40 sliders have a 75% chance
+            of reaching the target with a starting line of 300 (whether they succeed or not depends on the value of their multiplier).
+            With the same slider score of 40, they have a 50% chance of reaching the target with a starting line of 200,
+            a 25% chance with a starting line of 100, and a 0% chance with a starting line of 0.
+            <b>So, if two participants make the same effort and obtain the same slider score, the one who draws a higher starting line has a greater chance of reaching the target.</b>
+            <br>
+            <br>
+            Looking at the table, we also see that if participants want, for example, a 50% chance of reaching the target,
+            then they must correctly position 60 sliders if their starting line is 100, 40 if their starting line is 200,
+            and only 20 if their starting line is 300.
+            <b>So, participants drawing lower starting lines must put in more effort to have the same chance
+            of reaching the target as those with higher starting lines.
+            </b>
+            {% endif %}
+
+        {% if C.TARGET == 800 %}
+            <p style="text-align:center;"><img src="https://i.imgur.com/hKRv1Pa.jpg" width="700px" class="centerImage"></p>
+            This table tells you, for instance, that participants who correctly position 80 sliders have a 75% chance
+            of reaching the target with a starting line of 600 (whether they succeed or not depends on the value of their multiplier).
+            With the same slider score of 80, they have a 50% chance of reaching the target with a starting line of 400,
+            a 25% chance with a starting line of 200, and a 0% chance with a starting line of 0.
+            <b>So, if two participants make the same effort and obtain the same slider score, the one who draws a higher starting line has a greater chance of reaching the target.</b>
+            <br>
+            <br>
+            Looking at the table, we also see that if participants want, for example, a 50% chance of reaching the target,
+            then they must correctly position 120 sliders if their starting line is 200, 80 if their starting line is 400,
+            and only 40 if their starting line is 600.
+            <b>So, participants drawing lower starting lines must put in more effort to have the same chance
+            of reaching the target as those with higher starting lines.
+            </b>
+            {% endif %}
+
+            {% if C.TARGET == 2000 %}
+            <p style="text-align:center;"><img src="https://i.imgur.com/6pbLni7.jpg" width="700px" class="centerImage"></p>
+            This table tells you, for instance, that participants who correctly position 100 sliders have a 75% chance
+            of reaching the target with a starting line of 1750 (whether they succeed or not depends on the value of their multiplier).
+            With the same slider score of 100, they have a 50% chance of reaching the target with a starting line of 1500,
+            a 25% chance with a starting line of 1250, and a 0% chance with a starting line of 1000 and below.
+            <b>So, if two participants make the same effort and obtain the same slider score, the one who draws a higher starting line has a greater chance of reaching the target.</b>
+            <br>
+            <br>
+            Looking at the table, we also see that if participants want, for example, a 50% chance of reaching the target,
+            then they must correctly position 200 sliders if their starting line is 1000, 150 if their starting line is 1250,
+            and only 50 if their starting line is 1750.
+            <b>So, participants drawing lower starting lines must put in more effort to have the same chance
+            of reaching the target as those with higher starting lines.
+            </b>
+            {% endif %}
+
+        {% if C.TARGET == 3000 %}
+            <p style="text-align:center;"><img src="https://i.imgur.com/loEedQM.jpg" width="700px" class="centerImage"></p>
+            This table tells you, for instance, that participants who correctly position 200 sliders have a 75% chance
+            of reaching the target with a starting line of 2500 (whether they succeed or not depends on the value of their multiplier).
+            With the same slider score of 200, they have a 50% chance of reaching the target with a starting line of 2000,
+            a 25% chance with a starting line of 1500, and a 0% chance with a starting line of 1000 and below.
+            <b>So, if two participants make the same effort and obtain the same slider score, the one who draws a higher starting line has a greater chance of reaching the target.</b>
+            <br>
+            <br>
+            Looking at the table, we also see that if participants want, for example, a 50% chance of reaching the target,
+            then they must correctly position 300 sliders if their starting line is 1500, 200 if their starting line is 2000,
+            and only 100 if their starting line is 2500.
+            <b>So, participants drawing lower starting lines must put in more effort to have the same chance
+            of reaching the target as those with higher starting lines.
+            </b>
+        {% endif %}
+
+        {% if C.TARGET == 2500 %}
+            <p style="text-align:center;"><img src="https://i.imgur.com/B17ioqb.jpg" width="700px" class="centerImage"></p>
+            This table tells you, for instance, that participants who correctly position 200 sliders have a 75% chance
+            of reaching the target with a starting line of 2000 (whether they succeed or not depends on the value of their multiplier).
+            With the same slider score of 200, they have a 50% chance of reaching the target with a starting line of 1500,
+            a 25% chance with a starting line of 1000, and a 0% chance with a starting line of 500 and below.
+            <b>So, if two participants make the same effort and obtain the same slider score, the one who draws a higher starting line has a greater chance of reaching the target.</b>
+            <br>
+            <br>
+            Looking at the table, we also see that if participants want, for example, a 50% chance of reaching the target,
+            then they must correctly position 300 sliders if their starting line is 1000, 200 if their starting line is 1500,
+            and only 100 if their starting line is 2000.
+            <b>So, participants drawing lower starting lines must put in more effort to have the same chance
+            of reaching the target as those with higher starting lines.
+            </b>
+        {% endif %}
+
+
+    </div>
+
+    {% if size_mypair >= 1 %}
+
+            We have randomly paired other participants from your session. <b>In each pair, one participant reached the target
+            while the other did not. As a reward, the player who reached the target in the pair receives a bonus of {{ C.BONUS }} points.</b>
+            The player who didn't reach the target receives nothing.<br>
+            <br>
+            For each pair, you will see below some information about the participants' starting line and whether they reached the target or not.
+            You do not know their slider score. If you want, you can redistribute the bonus between the two players.
+        <br>
+        <br>
+
+        <h5><b>Pair #1</b></h5>
+
+        <div class="wrapper instructions"; style="border-radius: 10px; max-width: 1000px">
+
+        <table class="table table-striped table-hover" style="text-align: center">
+        <thead style="background-color: #dcdcff"><th>Starting line</th><th>Reached the target</th><th>Bonus before redistribution</th></thead>
+            <tr style="color: forestgreen"><td>{{ reach1|to0 }}</td><td>Yes</td><td>100 points</td></tr>
+            <tr style="color: orangered"><td>{{ miss1|to0 }}</td><td>No</td><td>0 points<td></tr>
+        </table>
+        <br>
+
+            <p>Move the bar to decide how to redistribute the {{ C.BONUS }} points between the players.</p>
+            0 <input type="range" name="send_loser_pair1" min="0" max="{{ C.BONUS }}" value="0" step="5" oninput="updateDescription1(this)"> {{ C.BONUS }}
+                <p id="Redistribute1" style="color: royalblue"></p>
+
+                <input type="hidden" name="check_send_loser_pair1" value="" id="id_check_send_loser_pair1"/>
+
+        <p><b>Think of the participant who <span style="color: darkgreen">reached</span> the target in pair #1.</b></p>
+        <p>What do you think was their slider score?</p>
+
+        0 <input type="range" name="belief_effort_reach_pair1" min="0" max="{{ C.NUM_SLIDERS }}" oninput="updateDescription3(this)"> {{ C.NUM_SLIDERS }}
+        <b><p id="Effort-reach-pair1" style="margin-left:6.2em"></p></b>
+
+        <input type="hidden" name="check_belief_effort_reach_pair1" value="" id="id_check_belief_effort_reach_pair1"/>
+
+        <p>What do you think was their multiplier ?</p>
+        0 <input type="range" name="belief_skill_reach_pair1" min="0" max="{{ C.SKILL_UB_LOW }}" step="0.1" oninput="updateDescription4(this)"> {{ C.SKILL_UB_LOW }}
+        <b><p id="Skill-reach-pair1" style="margin-left:6.2em"></p></b>
+
+        <input type="hidden" name="check_belief_skill_reach_pair1" value="" id="id_check_belief_skill_reach_pair1"/>
+
+        <p><b>Think of the participant who <span style="color: orangered">missed</span> the target in pair #1.</b></p>
+        <p><p>What do you think was their slider score ?</p>
+
+        0 <input type="range" name="belief_effort_miss_pair1" min="0" max="{{ C.NUM_SLIDERS }}" oninput="updateDescription5(this)"> {{ C.NUM_SLIDERS }}
+        <b><p id="Effort-miss-pair1" style="margin-left:6.2em"></p></b>
+
+        <input type="hidden" name="check_belief_effort_miss_pair1" value="" id="id_check_belief_effort_miss_pair1"/>
+
+        <p>What do you think was their multiplier?</p>
+        0 <input type="range" name="belief_skill_miss_pair1" min="0" max="{{ C.SKILL_UB_LOW }}" step="0.1" oninput="updateDescription6(this)"> {{ C.SKILL_UB_LOW }}
+            <b><p id="Skill-miss-pair1" style="margin-left:6.2em"></p></b>
+
+        <input type="hidden" name="check_belief_skill_miss_pair1" value="" id="id_check_belief_skill_miss_pair1"/>
+
+        <p>Remember that the more accurate your guesses are, the more points you will receive.</p>
+
+        </div>
+
+    {% endif %}
+
+    {% if size_mypair >= 2 %}
+
+        <h5><b>Pair #2</b></h5>
+
+        <div class="wrapper instructions"; style="border-radius: 10px; max-width: 1000px">
+
+        <table class="table table-striped table-hover" style="text-align: center">
+
+        <thead style="background-color: #dcdcff"><th>Starting line</th><th>Reached the target</th><th>Bonus before redistribution</th></thead>
+            <tr style="color: forestgreen"><td>{{ reach2|to0 }}</td><td>Yes</td><td>100 points</td></tr>
+            <tr  style="color: orangered"><td>{{ miss2|to0 }}</td><td>No</td><td>0 points<td></tr>
+        </table>
+
+            <p>Move the bar to decide how to redistribute the {{ C.BONUS }} points between the players.</p>
+
+        0 <input type="range" name="send_loser_pair2" min="0" max="{{ C.BONUS }}" value="0" step="5" oninput="updateDescription2(this)"> {{ C.BONUS }}
+        <p id="Redistribute2" style="color: royalblue"></p>
+
+        <input type="hidden" name="check_send_loser_pair2" value="" id="id_check_send_loser_pair2"/>
+
+        <p><b>Think of the participant who <span style="color: darkgreen">reached</span> the target in pair #2.</b></p>
+        <p>What do you think was their slider score?</p>
+
+        0 <input type="range" name="belief_effort_reach_pair2" min="0" max="{{ C.NUM_SLIDERS }}" oninput="updateDescription30(this)"> {{ C.NUM_SLIDERS }}
+        <b><p id="Effort-reach-pair2" style="margin-left:6.2em"></p></b>
+
+        <input type="hidden" name="check_belief_effort_reach_pair2" value="" id="id_check_belief_effort_reach_pair2"/>
+
+        <p>What do you think was their multiplier ?</p>
+        0 <input type="range" name="belief_skill_reach_pair2" min="0" max="{{ C.SKILL_UB_LOW }}" step="0.1" oninput="updateDescription40(this)"> {{ C.SKILL_UB_LOW }}
+        <b><p id="Skill-reach-pair2" style="margin-left:6.2em"></p></b>
+
+        <input type="hidden" name="check_belief_skill_reach_pair2" value="" id="id_check_belief_skill_reach_pair2"/>
+
+            <p><b>Think of the participant who <span style="color: orangered">missed</span> the target in pair #2.</b></p>
+        <p>What do you think was their slider score?</p>
+
+        0 <input type="range" name="belief_effort_miss_pair2" min="0" max="{{ C.NUM_SLIDERS }}" oninput="updateDescription50(this)"> {{ C.NUM_SLIDERS }}
+        <b><p id="Effort-miss-pair2" style="margin-left:6.2em"></p></b>
+
+        <input type="hidden" name="check_belief_effort_miss_pair2" value="" id="id_check_belief_effort_miss_pair2"/>
+
+        <p>What do you think was their multiplier ?</p>
+        0 <input type="range" name="belief_skill_miss_pair2" min="0" max="{{ C.SKILL_UB_LOW }}" step="0.1" oninput="updateDescription60(this)"> {{ C.SKILL_UB_LOW }}
+        <b><p id="Skill-miss-pair2" style="margin-left:6.2em"></p></b>
+
+        <input type="hidden" name="check_belief_skill_miss_pair2" value="" id="id_check_belief_skill_miss_pair2"/>
+
+        </div>
+
+    {% endif %}
+
+
+    {% next_button %}
+
+{% endblock %}
+
+{% block scripts %}
+
+<script>
+
+    let redistrib1 = document.getElementById('Redistribute1');
+    function updateDescription1(input) {
+        let send_loser_pair1 = parseInt(input.value);
+        let give_winner_pair1 = js_vars.bonus - send_loser_pair1;
+        if (send_loser_pair1 == 0) {
+            redistrib1.innerText = `I do not want to redistribute. The participant who reached the target keeps ${give_winner_pair1} points.`;
+        }
+        else if (send_loser_pair1 != 0) {
+            redistrib1.innerText = `I transfer ${send_loser_pair1} points from the participant who reached the target to the other participant. The participant who reached the target keeps ${give_winner_pair1} points.`;
+        }
+        document.getElementById('id_check_send_loser_pair1').value = 1;
+    }
+
+    let redistrib2 = document.getElementById('Redistribute2');
+    function updateDescription2(input) {
+        let send_loser_pair2 = parseInt(input.value);
+        let give_winner_pair2 = js_vars.bonus - send_loser_pair2;
+        if (send_loser_pair2 == 0) {
+            redistrib2.innerText = `I do not want to redistribute. The participant who reached the target keeps ${give_winner_pair2} points.`;
+        }
+        else if (send_loser_pair2 != 0) {
+            redistrib2.innerText = `I transfer ${send_loser_pair2} points from the participant who reached the target to the other participant. The participant who reached the target keeps ${give_winner_pair2} points.`;
+        }
+        document.getElementById('id_check_send_loser_pair2').value = 1;
+    }
+
+    let effort_reach_pair1 = document.getElementById('Effort-reach-pair1');
+    function updateDescription3(input) {
+        let belief_effort_reach_pair1 = parseInt(input.value);
+        effort_reach_pair1.innerText = `${belief_effort_reach_pair1}`;
+        document.getElementById('id_check_belief_effort_reach_pair1').value = 1
+    }
+
+    let skill_reach_pair1 = document.getElementById('Skill-reach-pair1');
+    function updateDescription4(input) {
+        let belief_skill_reach_pair1 = parseInt(input.value);
+        skill_reach_pair1.innerText = `${belief_skill_reach_pair1}`;
+        document.getElementById('id_check_belief_skill_reach_pair1').value = 1
+    }
+
+    let effort_miss_pair1 = document.getElementById('Effort-miss-pair1');
+    function updateDescription5(input) {
+        let belief_effort_miss_pair1 = parseInt(input.value);
+        effort_miss_pair1.innerText = `${belief_effort_miss_pair1}`;
+        document.getElementById('id_check_belief_effort_miss_pair1').value = 1
+    }
+
+    let skill_miss_pair1 = document.getElementById('Skill-miss-pair1');
+    function updateDescription6(input) {
+        let belief_skill_miss_pair1 = parseInt(input.value);
+        skill_miss_pair1.innerText = `${belief_skill_miss_pair1}`;
+        document.getElementById('id_check_belief_skill_miss_pair1').value = 1
+    }
+
+    let effort_reach_pair2 = document.getElementById('Effort-reach-pair2');
+    function updateDescription30(input) {
+        let belief_effort_reach_pair2 = parseInt(input.value);
+        effort_reach_pair2.innerText = `${belief_effort_reach_pair2}`;
+        document.getElementById('id_check_belief_effort_reach_pair2').value = 1
+    }
+
+    let skill_reach_pair2 = document.getElementById('Skill-reach-pair2');
+    function updateDescription40(input) {
+        let belief_skill_reach_pair2 = parseInt(input.value);
+        skill_reach_pair2.innerText = `${belief_skill_reach_pair2}`;
+        document.getElementById('id_check_belief_skill_reach_pair2').value = 1
+    }
+
+    let effort_miss_pair2 = document.getElementById('Effort-miss-pair2');
+    function updateDescription50(input) {
+        let belief_effort_miss_pair2 = parseInt(input.value);
+        effort_miss_pair2.innerText = `${belief_effort_miss_pair2}`;
+        document.getElementById('id_check_belief_effort_miss_pair2').value = 1
+    }
+
+    let skill_miss_pair2 = document.getElementById('Skill-miss-pair2');
+    function updateDescription60(input) {
+        let belief_skill_miss_pair2 = parseInt(input.value);
+        skill_miss_pair2.innerText = `${belief_skill_miss_pair2}`;
+        document.getElementById('id_check_belief_skill_miss_pair2').value = 1
+    }
+
+</script>
+
+{% endblock %}
+

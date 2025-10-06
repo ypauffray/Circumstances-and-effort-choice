@@ -1,0 +1,63 @@
+{% extends "global/Page.html" %}
+{% load otree static %}
+
+{# ****************************************************************************************************************** #}
+{# *** STYLES *** #}
+{# ****************************************************************************************************************** #}
+{% block styles %}
+    <link href="{% static 'mpl/css/custom.css' %}" rel="stylesheet" xmlns="http://www.w3.org/1999/html"/>
+{% endblock %}
+
+{% block title %}
+    <p>Results
+    {% if player.round_number <= C.NUM_ROUNDS_STG1 %}
+        <small> (Round {{ subsession.round_number }} of {{ C.NUM_ROUNDS_STG1 }})</small>
+    {% endif %}
+    </p>
+{% endblock %}
+
+{% block content %}
+
+     <div class="wrapper instructions"; style="border-radius: 10px; max-width: 1000px">
+
+    <p>Your starting line was <b><span style="color: orangered">{{ player.capital_draw|to0 }}</span></b>. Your slider score was <b><span style="color: darkgreen">{{ player.num_correct }}</span></b>.
+        In this round, your multiplier was randomly selected to be <b><span style="color: royalblue">{{ player.skill_draw|to0 }}</span></b>.</p>
+
+    <p>Therefore, your production is: <b><span style="color: orangered">{{ player.capital_draw|to0 }}</span></b>+(<b><span style="color: royalblue">{{ player.skill_draw|to0 }}</span></b>*<b><span style="color: darkgreen">{{ player.num_correct }}</span></b>) = <b>{{ player.output|to0 }}</b></p>
+
+    {% if player.target_is_reached == 1 %}
+
+        <p><b>Since your production was greater than the target of {{ C.TARGET }}, you receive {{ C.REWARD }} points.</b></p>
+
+    {% else %}
+
+        <p><b>You didn't reach the target of {{ C.TARGET }} in this round and so receive 0 points.</b></p>
+
+    {% endif %}
+
+     </div>
+
+    <input type="hidden" name="time_spent_feedback" id="time_spent"/>
+
+    {% next_button %}
+
+{% endblock %}
+
+{% block scripts %}
+
+<script>
+    var pageTimeElapsed = 0;
+    var pageTimerID = -1;
+
+    function pageTick() {
+        pageTimeElapsed++
+        document.getElementById("time_spent").value = pageTimeElapsed/10;
+    }
+    window.onload = function() {
+        if(pageTimerID == -1){
+            pageTimerID = setInterval(pageTick, 100);
+        }
+    };
+</script>
+
+{% endblock %}

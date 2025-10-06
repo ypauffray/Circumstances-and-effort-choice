@@ -1,0 +1,41 @@
+{% extends "global/Page.html" %}
+{% load staticfiles otree %}
+{% load i18n %}
+
+
+{# ****************************************************************************************************************** #}
+{# *** STYLES *** #}
+{# ****************************************************************************************************************** #}
+{% block styles %}
+    <link href="{% static 'mpl/css/custom.css' %}" rel="stylesheet" xmlns="http://www.w3.org/1999/html"/>
+{% endblock %}
+
+
+{# ****************************************************************************************************************** #}
+{# *** TITLE *** #}
+{# ****************************************************************************************************************** #}
+{% block title %}
+    {% trans "Welcome" %}
+{% endblock %}
+
+
+{# ****************************************************************************************************************** #}
+{# *** CONTENT *** #}
+{# ****************************************************************************************************************** #}
+{% block content %}
+
+    <h4>Welcome to the experiment!</h4></br>
+    <p>You will now take part in an experiment on decision making. In addition to the show-up fee of $5, you can earn additional money which will be paid in cash at the
+        end of the experiment. How much you earn depends on your decisions, the decisions of others, and on chance.</p>
+    <p>At the end of the instructions you will be asked to answer a few questions, so make sure that you read them carefully.</p><p>
+    <p>Before we start, please indicate the following information which we need for your payment:</p>
+
+
+
+    {% formfields %}
+
+
+    {% next_button %}
+
+{% endblock %}
+

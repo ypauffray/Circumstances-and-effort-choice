@@ -1,0 +1,57 @@
+{% extends "global/Page.html" %}
+{% load staticfiles otree %}
+{% load i18n %}
+
+
+{# ****************************************************************************************************************** #}
+{# *** STYLES *** #}
+{# ****************************************************************************************************************** #}
+{% block styles %}
+    <link href="{% static 'mpl/css/custom.css' %}" rel="stylesheet" xmlns="http://www.w3.org/1999/html"/>
+{% endblock %}
+
+
+{# ****************************************************************************************************************** #}
+{# *** TITLE *** #}
+{# ****************************************************************************************************************** #}
+{% block title %}
+    {% trans "Stage 3" %}
+{% endblock %}
+
+
+{# ****************************************************************************************************************** #}
+{# *** CONTENT *** #}
+{# ****************************************************************************************************************** #}
+{% block content %}
+    <div class="wrapper instructions"; style="border-radius: 10px; max-width: 1000px">
+
+        In this stage, there will be <b>one last slider task</b>. The time limit is 10 minutes.
+            As before, if you reach the target you will receive {{ C.REWARD }} points. If you don't reach the target, you will receive 0 points.
+            <br>
+            <br>
+            <h5><b>Pair</b></h5>
+        After completing the slider task, <b>you will be paired with another participant.</b>
+            A pair will always consist of one member who reached the target, and one who didn't. So, if you reached the target
+            you will be paired with someone who did not, and vice versa.
+            <br>
+            <br>
+        <b>Your pair will be randomly assigned to at least one other participant, who will decide how to allocate a bonus of {{ C.BONUS }} points between the two of you.</b>
+            The other participant will be told who reached the target in the pair, and their decision will directly affect your earnings. <br>
+            <br>
+            You won't know the identities of the other person in your pair or the person making the redistribution decision.
+            If your pair is shown to more than one participant, we will randomly choose one of the decisions made for your pair to determine
+            the amount you will earn.<br>
+            <br>
+            <h5><b>Redistribution decision</b></h5>
+            <b>You will also have to decide how
+            to allocate a bonus of {{ C.BONUS }} points between the two members of one or two randomly chosen pairs of other participants.</b>
+            Your decision will directly affect their earnings.<br>
+            <br>You won't know the identities of these participants,
+            and they won't know who made the redistribution decision for them. You will never have to make a redistribution decision for a pair to which you belong.
+            <br>
+    </div>
+
+    {% next_button %}
+
+{% endblock %}
+

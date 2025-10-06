@@ -1,0 +1,77 @@
+{% extends "global/Page.html" %}
+{% load otree static %}
+
+{% block title %}
+    Bonus redistribution
+{% endblock %}
+
+{% block content %}
+
+    <p> Imagine that we select two participants from a previous round. <b>A computer randomly
+            chooses one of the participants to receive a bonus of {{ C.BONUS }} points.</b> The other receives 0 points.
+            <br>
+            <br>
+        If you want, you can redistribute the bonus between the lucky participant and the other.
+    <br>
+
+        <p>Move the bar to decide how to redistribute the points between the participants.</p>
+
+       0 <input type="range" name="send_unlucky" min="0" max="{{ C.BONUS }}" value="0" step="5" oninput="updateDescription(this)"> {{ C.BONUS }}
+    <p id="Redistribute_lucky" ; style="color: royalblue"></p>
+
+    <input type="hidden" name="check_send_unlucky" value="" id="id_check_send_unlucky"/>
+
+    <br>
+
+
+        <p>Next, imagine again that we select two participants from a previous round.
+            <b>This time, we give a bonus of {{ C.BONUS }} points to the best performer</b>,
+            meaning the participant with the highest slider score of the two, regardless of whether they reach the target or not.
+            <br>
+            <br>
+         If you want, you can redistribute the bonus between the best performer and the other participant.
+    <br>
+
+        <p>Move the bar to decide how to redistribute the points between the participants.</p>
+
+    0 <input type="range" name="send_lazy" min="0" max="{{ C.BONUS }}" value="0" step="5" oninput="updateDescription2(this)"> {{ C.BONUS }}
+    <p id="Redistribute_merit"; style="color: royalblue"></p>
+
+    <input type="hidden" name="check_send_lazy" value="" id="id_check_send_lazy"/>
+
+    {% next_button %}
+
+{% endblock %}
+
+{% block scripts %}
+
+<script>
+    let red_lucky = document.getElementById('Redistribute_lucky');
+    function updateDescription(input) {
+        let send_unlucky = parseInt(input.value);
+        let give_lucky = js_vars.bonus - send_unlucky;
+        if (send_unlucky == 0) {
+            red_lucky.innerHTML = `I do not want to redistribute. The lucky participant keeps ${give_lucky} points.` ;
+        }
+        else if (send_unlucky != 0) {
+            red_lucky.innerHTML = `I transfer ${send_unlucky} points from the lucky participant to the other participant. The lucky participant keeps ${give_lucky} points.`;
+        }
+        document.getElementById('id_check_send_unlucky').value = 1;
+    }
+
+    let red_merit = document.getElementById('Redistribute_merit');
+    function updateDescription2(input) {
+        let send_lazy = parseInt(input.value);
+        let give_merit = js_vars.bonus - send_lazy;
+        if (send_lazy == 0) {
+            red_merit.innerText = `I do not want to redistribute. The best performer keeps ${give_merit} points.`;
+        }
+        else if (send_lazy != 0) {
+            red_merit.innerText = `I transfer ${send_lazy} points from the best performer to the other participant. The best performer keeps ${give_merit} points.`;
+        }
+        document.getElementById('id_check_send_lazy').value = 1;
+    }
+
+</script>
+
+{% endblock %}

@@ -1,0 +1,233 @@
+{% extends "global/Page.html" %}
+{% load otree static %}
+
+{% block styles %}
+    <link href="{% static 'mpl/css/custom.css' %}" rel="stylesheet" xmlns="http://www.w3.org/1999/html"/>
+{% endblock %}
+
+{% block title %}
+    Guesses
+{% endblock %}
+
+{% block content %}
+
+    {% if player.current_treatment == 'High-Low' and player.round_firstHL == player.subsession.round_number %}
+        <p><b>For everyone in this round:</b>
+            <ul>
+                <li>the <b><span style="color: royalblue">starting line</span></b> was randomly selected <b><span style="color: royalblue">between {{ C.CAPITAL_LB_HIGH }}
+            and {{ C.CAPITAL_UB_HIGH }}</span></b>. It varied among participants. Therefore, the starting line of other participants may have been different from yours.</li>
+            <li>the <b><span style="color: royalblue">multiplier</span></b> was randomly selected <b><span style="color: royalblue">between {{ C.SKILL_LB }} and {{C.SKILL_UB_LOW}}</span></b>. It also varied among participants.</li>
+        </ul></p>
+    {% endif %}
+
+    {% if player.current_treatment == 'Low-Low' %}
+        <p><b>For everyone in this round:</b>
+        <ul><li>the <b><span style="color: royalblue">starting line</span></b> was <b><span style="color: royalblue">{{ C.CAPITAL_MEAN }}</span></b>.</li>
+            <li>the <b><span style="color: royalblue">multiplier</span></b> was randomly selected <b><span style="color: royalblue">between {{ C.SKILL_LB }} and {{C.SKILL_UB_LOW}}</span></b>, which varied across participants</span>.</li>
+        </ul></p>
+    {% endif %}
+
+    {% if player.current_treatment == 'Low-High' %}
+        <p><b>For everyone in this round:</b>
+        <ul><li>the <b><span style="color: royalblue">starting line</span></b> was <b><span style="color: royalblue">{{ C.CAPITAL_MEAN }}</span></b>.</li>
+            <li>the <b><span style="color: royalblue">multiplier</span></b> was randomly selected <b><span style="color: royalblue">between {{ C.SKILL_LB }} and {{C.SKILL_UB_HIGH}}</span></b>, which varied across participants</span>.</li>
+        </ul></p>
+    {% endif %}
+
+    <p><b>Think of participants who <span style="color: orangered">reached</span> the target in the current round.</b></p>
+
+    {% if player.current_treatment == 'High-Low' and player.round_firstHL == player.subsession.round_number %}
+
+        <p>What do you think is the average starting line of people who reached the target, excluding yourself?</p>
+
+        0 <input type="range" name="belief_avg_capital_reach" min="0" max="{{ C.CAPITAL_UB_HIGH }}" oninput="updateDescription(this)"> {{ C.CAPITAL_UB_HIGH }}
+        <b><p id="Avg-capital-reach" style="margin-left:6.2em" ></p></b>
+
+        <input type="hidden" name="check_belief_avg_capital_reach" value="" id="id_check_belief_avg_capital_reach"/>
+
+        <p>What do you think is the average slider score (the number of correctly positioned sliders) of people who reached the target, excluding yourself?</p>
+
+        0 <input type="range" name="belief_avg_effort_reach" min="0" max="{{ C.NUM_SLIDERS }}" oninput="updateDescription1(this)"> {{ C.NUM_SLIDERS }}
+        <b><p id="Avg-effort-reach" style="margin-left:6.2em"></p></b>
+
+        <input type="hidden" name="check_belief_avg_effort_reach" value="" id="id_check_belief_avg_effort_reach"/>
+
+        <p>What do you think is the average multiplier of participants who reached the target, excluding yourself?</p>
+
+        0 <input type="range" name="belief_avg_skill_reach" min="0" max="{{ C.SKILL_UB_LOW }}" step="0.1" oninput="updateDescription2(this)"> {{ C.SKILL_UB_LOW }}
+        <b><p id="Avg-skill-reach" style="margin-left:6.2em"></p></b>
+
+        <input type="hidden" name="check_belief_avg_skill_reach" value="" id="id_check_belief_avg_skill_reach"/>
+
+    {% endif %}
+
+    {% if player.current_treatment == 'Low-Low' %}
+
+        <p>What do you think is the average slider score (the number of correctly positioned sliders) of people who reached the target, excluding yourself?</p>
+
+        0 <input type="range" name="belief_avg_effort_reach" min="0" max="{{ C.NUM_SLIDERS }}" oninput="updateDescription1(this)"> {{ C.NUM_SLIDERS }}
+        <b><p id="Avg-effort-reach" style="margin-left:6.2em"></p></b>
+
+        <input type="hidden" name="check_belief_avg_effort_reach" value="" id="id_check_belief_avg_effort_reach"/>
+
+        <p>What do you think is the average multiplier of participants who reached the target, excluding yourself?</p>
+
+        0 <input type="range" name="belief_avg_skill_reach" min="0" max="{{ C.SKILL_UB_LOW }}" step="0.1" oninput="updateDescription2(this)"> {{ C.SKILL_UB_LOW }}
+        <b><p id="Avg-skill-reach" style="margin-left:6.2em"></p></b>
+
+        <input type="hidden" name="check_belief_avg_skill_reach" value="" id="id_check_belief_avg_skill_reach"/>
+
+    {% endif %}
+
+    {% if player.current_treatment == 'Low-High' %}
+
+        <p>What do you think is the average slider score (the number of correctly positioned sliders) of people who reached the target, excluding yourself?</p>
+
+        0 <input type="range" name="belief_avg_effort_reach" min="0" max="{{ C.NUM_SLIDERS }}" oninput="updateDescription1(this)"> {{ C.NUM_SLIDERS }}
+        <b><p id="Avg-effort-reach" style="margin-left:6.2em"></p></b>
+
+         <input type="hidden" name="check_belief_avg_effort_reach" value="" id="id_check_belief_avg_effort_reach"/>
+
+        <p>What do you think is the average multiplier of participants who reached the target, excluding yourself?</p>
+
+        0 <input type="range" name="belief_avg_skill_reach" min="0" max="{{ C.SKILL_UB_HIGH }}" step="0.1" oninput="updateDescription2(this)"> {{ C.SKILL_UB_HIGH }}
+        <b><p id="Avg-skill-reach" style="margin-left:6.2em"></p></b>
+
+        <input type="hidden" name="check_belief_avg_skill_reach" value="" id="id_check_belief_avg_skill_reach"/>
+
+    {% endif %}
+
+    <p><b>Now, think of participants who <span style="color: orangered">missed</span> the target in the current round.</b></p>
+
+    {% if player.current_treatment == 'High-Low' and player.round_firstHL == player.subsession.round_number %}
+
+        <p>What do you think is the average starting line of participants who missed the target, excluding yourself?</p>
+
+        0 <input type="range" name="belief_avg_capital_miss" min="0" max="{{ C.CAPITAL_UB_HIGH }}" oninput="updateDescription3(this)"> {{ C.CAPITAL_UB_HIGH }}
+        <b><p id="Avg-capital-miss" style="margin-left:6.2em"></p></b>
+
+        <input type="hidden" name="check_belief_avg_capital_miss" value="" id="id_check_belief_avg_capital_miss"/>
+
+        <p>What do you think is the average slider score of participants who missed the target, excluding yourself?</p>
+
+        0 <input type="range" name="belief_avg_effort_miss" min="0" max="{{ C.NUM_SLIDERS }}" oninput="updateDescription4(this)"> {{ C.NUM_SLIDERS }}
+        <b><p id="Avg-effort-miss" style="margin-left:6.2em"></p></b>
+
+        <input type="hidden" name="check_belief_avg_effort_miss" value="" id="id_check_belief_avg_effort_miss"/>
+
+        <p>What do you think is the average multiplier of participants who missed the target, excluding yourself?</p>
+
+        0 <input type="range" name="belief_avg_skill_miss" min="0" max="{{ C.SKILL_UB_LOW }}" step="0.1" oninput="updateDescription5(this)"> {{ C.SKILL_UB_LOW }}
+        <b><p id="Avg-skill-miss" style="margin-left:6.2em"></p></b>
+
+        <input type="hidden" name="check_belief_avg_skill_miss" value="" id="id_check_belief_avg_skill_miss"/>
+
+    {% endif %}
+
+    {% if player.current_treatment == 'Low-Low' %}
+
+        <p>What do you think is the average slider score of participants who missed the target, excluding yourself?</p>
+
+        0 <input type="range" name="belief_avg_effort_miss" min="0" max="{{ C.NUM_SLIDERS }}" oninput="updateDescription4(this)"> {{ C.NUM_SLIDERS }}
+        <b><p id="Avg-effort-miss" style="margin-left:6.2em"></p></b>  {{ formfield_errors 'belief_avg_effort_miss' }}
+
+        <input type="hidden" name="check_belief_avg_effort_miss" value="" id="id_check_belief_avg_effort_miss"/>
+
+        <p>What do you think is the average multiplier of participants who missed the target, excluding yourself?</p>
+
+        0 <input type="range" name="belief_avg_skill_miss" min="0" max="{{ C.SKILL_UB_LOW }}" step="0.1" oninput="updateDescription5(this)"> {{ C.SKILL_UB_LOW }}
+        <b><p id="Avg-skill-miss" style="margin-left:6.2em"></p></b> {{ formfield_errors 'belief_avg_skill_miss' }}
+
+        <input type="hidden" name="check_belief_avg_skill_miss" value="" id="id_check_belief_avg_skill_miss"/>
+
+
+    {% endif %}
+
+    {% if player.current_treatment == 'Low-High' %}
+
+        <p>What do you think is the average slider score of participants who missed the target, excluding yourself?</p>
+
+        0 <input type="range" name="belief_avg_effort_miss" min="0" max="{{ C.NUM_SLIDERS }}" oninput="updateDescription4(this)"> {{ C.NUM_SLIDERS }}
+        <b><p id="Avg-effort-miss" style="margin-left:6.2em"></p></b>  {{ formfield_errors 'belief_avg_effort_miss' }}
+
+        <input type="hidden" name="check_belief_avg_effort_miss" value="" id="id_check_belief_avg_effort_miss"/>
+
+        <p>What do you think is the average multiplier of participants who missed the target, excluding yourself?</p>
+
+        0 <input type="range" name="belief_avg_skill_miss" min="0" max="{{ C.SKILL_UB_HIGH }}" step="0.1" oninput="updateDescription5(this)"> {{ C.SKILL_UB_HIGH }}
+        <b><p id="Avg-skill-miss" style="margin-left:6.2em"></p></b> {{ formfield_errors 'belief_avg_skill_miss' }}
+
+        <input type="hidden" name="check_belief_avg_skill_miss" value="" id="id_check_belief_avg_skill_miss"/>
+
+    {% endif %}
+
+    <p><b>Remember that the more accurate your guesses are, the more points you will receive.</b></p>
+
+    <input type="hidden" name="time_spent" id="time_spent"/>
+
+    {% next_button %}
+
+{% endblock %}
+
+{% block scripts %}
+
+<script>
+
+    let average_capital_reach = document.getElementById('Avg-capital-reach');
+    function updateDescription(input) {
+        let belief_avg_capital_reach = parseInt(input.value);
+        average_capital_reach.innerText = `${belief_avg_capital_reach}`;
+        document.getElementById('id_check_belief_avg_capital_reach').value = 1
+    }
+
+    let average_effort_reach = document.getElementById('Avg-effort-reach');
+    function updateDescription1(input) {
+        let belief_avg_effort_reach = parseInt(input.value);
+        average_effort_reach.innerText = `${belief_avg_effort_reach}`;
+        document.getElementById('id_check_belief_avg_effort_reach').value = 1
+    }
+
+    let average_skill_reach = document.getElementById('Avg-skill-reach');
+    function updateDescription2(input) {
+        let belief_avg_skill_reach = parseFloat(input.value);
+        average_skill_reach.innerText = `${belief_avg_skill_reach}`;
+        document.getElementById('id_check_belief_avg_skill_reach').value = 1
+    }
+
+    let average_capital_miss = document.getElementById('Avg-capital-miss');
+    function updateDescription3(input) {
+        let belief_avg_capital_miss = parseInt(input.value);
+        average_capital_miss.innerText = `${belief_avg_capital_miss}`;
+        document.getElementById('id_check_belief_avg_capital_miss').value = 1
+    }
+
+    let average_effort_miss = document.getElementById('Avg-effort-miss');
+    function updateDescription4(input) {
+        let belief_avg_effort_miss = parseInt(input.value);
+        average_effort_miss.innerText = `${belief_avg_effort_miss}`;
+        document.getElementById('id_check_belief_avg_effort_miss').value = 1
+    }
+
+    let average_skill_miss = document.getElementById('Avg-skill-miss');
+    function updateDescription5(input) {
+        let belief_avg_skill_miss = parseFloat(input.value);
+        average_skill_miss.innerText = `${belief_avg_skill_miss}`
+        document.getElementById('id_check_belief_avg_skill_miss').value = 1
+    }
+
+    var pageTimeElapsed = 0;
+    var pageTimerID = -1;
+
+    function pageTick() {
+        pageTimeElapsed++
+        document.getElementById("time_spent").value = pageTimeElapsed;
+    }
+    window.onload = function() {
+        if(pageTimerID == -1){
+            pageTimerID = setInterval(pageTick, 1000);
+        }
+    };
+
+</script>
+
+{% endblock %}

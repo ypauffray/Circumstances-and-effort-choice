@@ -1,0 +1,65 @@
+{% extends "global/Page.html" %}
+{% load otree static %}
+
+{# ****************************************************************************************************************** #}
+{# *** STYLES *** #}
+{# ****************************************************************************************************************** #}
+{% block styles %}
+    <link href="{% static 'mpl/css/custom.css' %}" rel="stylesheet" xmlns="http://www.w3.org/1999/html"/>
+{% endblock %}
+
+{% block title %}
+    <p>Starting line and multiplier range
+        {% if player.round_number <= C.NUM_ROUNDS_STG1 %}
+        <small> (Round {{ subsession.round_number }} of {{ C.NUM_ROUNDS_STG1 }})</small>
+        {% endif %}
+    </p>
+{% endblock %}
+
+{% block content %}
+
+    <p>In this round, your starting line and multiplier are determined as follows:</p>
+
+        <div class="wrapper instructions"; style="background-color:wheat;border-radius: 10px; max-width: 800px">
+
+        {% if player.current_treatment == 'High-Low' %}
+            <p><i>Starting line</i>&emsp; Your starting line will be a number randomly selected <b>between {{ C.CAPITAL_LB_HIGH }}
+                and {{ C.CAPITAL_UB_HIGH }}</b>.</p>
+            <p><i>Multiplier</i>&emsp; &emsp; The slider score will be multiplied by a number randomly selected <b>between {{ C.SKILL_LB }} and <span style="color: royalblue">{{C.SKILL_UB_LOW}}.</span></b></p>
+        {% endif %}
+
+        {% if player.current_treatment == 'Low-Low' %}
+            <p><i>Starting line</i>&emsp; Your starting line will be <b>{{ C.CAPITAL_MEAN }}</b>.</p>
+            <p><i>Multiplier</i>&emsp; &emsp; The slider score will be multiplied by a number randomly selected <b>between {{ C.SKILL_LB }} and <span style="color: royalblue">{{C.SKILL_UB_LOW}}.</span></b></p>
+        {% endif %}
+
+        {% if player.current_treatment == 'Low-High' %}
+            <p><i>Starting line</i>&emsp;  Your starting line will be <b>{{ C.CAPITAL_MEAN }}</b>.</p>
+            <p><i>Multiplier</i>&emsp; &emsp; Your slider score will be multiplied by a number randomly selected <b>between {{ C.SKILL_LB }} and <span style="color: royalblue">{{C.SKILL_UB_HIGH}}.</span></b></p>
+        {% endif %}
+        </div>
+
+    <input type="hidden" name="time_spent_rule" id="time_spent"/>
+
+    {% next_button %}
+
+{% endblock %}
+
+{% block scripts %}
+
+<script>
+    var pageTimeElapsed = 0;
+    var pageTimerID = -1;
+
+    function pageTick() {
+        pageTimeElapsed++
+        document.getElementById("time_spent").value = pageTimeElapsed/10;
+    }
+    window.onload = function() {
+        if(pageTimerID == -1){
+            pageTimerID = setInterval(pageTick, 100);
+        }
+    };
+</script>
+
+{% endblock %}

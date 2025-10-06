@@ -1,0 +1,84 @@
+{% extends "global/Page.html" %}
+{% load otree static %}
+
+{# ****************************************************************************************************************** #}
+{# *** STYLES *** #}
+{# ****************************************************************************************************************** #}
+{% block styles %}
+    <link href="{% static 'mpl/css/custom.css' %}" rel="stylesheet" xmlns="http://www.w3.org/1999/html"/>
+{% endblock %}
+
+{% block title %}
+    <p>Starting line value
+        {% if player.round_number <= C.NUM_ROUNDS_STG1 %}
+            <small> (Round {{ subsession.round_number }} of {{ C.NUM_ROUNDS_STG1 }})</small>
+        {% endif %}
+    </p>
+{% endblock %}
+
+{% block content %}
+
+    <div class="wrapper instructions"; style="border-radius: 10px; max-width: 1000px">
+
+    {% if player.current_treatment == 'High-Low' %}
+        <p>
+            Your randomly selected <b><span style="color: orangered">starting line is {{ player.capital_draw|to0 }}.</span></b>
+        {% else %}
+        <p>
+            Your <b><span style="color: orangered">starting line is {{ player.capital_draw|to0 }}.</span></b>
+        {% endif %}
+
+            {% if player.current_treatment == 'High-Low' %}
+                Remember that in this round your <b><span style="color: royalblue">multiplier</span></b> will be randomly selected
+                <b><span style="color: royalblue">between {{ C.SKILL_LB }} and {{C.SKILL_UB_LOW}}</span></b>.
+            {% endif %}
+
+            {% if player.current_treatment == 'Low-Low' %}
+                Remember that in this round your <b><span style="color: royalblue">multiplier</span></b> will be randomly selected <b><span style="color: royalblue">between {{ C.SKILL_LB }} and {{C.SKILL_UB_LOW}}.</span></b>
+            {% endif %}
+
+            {% if player.current_treatment == 'Low-High' %}
+            Remember that in this round your <b><span style="color: royalblue">multiplier</span></b> will be randomly selected <b><span style="color: royalblue">between {{ C.SKILL_LB }} and {{C.SKILL_UB_HIGH}}.</span></b>
+            {% endif %}
+            <br>
+            <br>
+            Your production will be calculated as follows:
+        <div class="wrapper instructions"; style="background-color:pink;text-align:center;border-radius: 10px; max-width: 400px; max-height: 60px">
+            <p>Production = <b><span style="color: orangered">Starting line</span></b> + (<b><span style="color: royalblue">Multiplier</span></b> * <b><span style="color: darkgreen">Slider score</span></b>)</p>
+        </div>
+            In order to reach the target, your production must be greater than or equal to {{ C.TARGET }}.<br>
+            <br>
+        If you don't want to do the task{% if player.round_number <= 5 %} in a given round,{% endif %} click 'Next' on the following page.
+            Your slider score for this round will be recorded as 0.
+
+            {% if player.round_number == 1 %}
+            Please click 'Next' to enter the first task. This will start the 45 minute time limit for the five rounds.<br>
+            {% endif %}
+        </p>
+    </div>
+
+    <input type="hidden" name="time_spent_reveal" id="time_spent"/>
+
+
+    {% next_button %}
+
+{% endblock %}
+
+{% block scripts %}
+
+<script>
+    var pageTimeElapsed = 0;
+    var pageTimerID = -1;
+
+    function pageTick() {
+        pageTimeElapsed++
+        document.getElementById("time_spent").value = pageTimeElapsed/10;
+    }
+    window.onload = function() {
+        if(pageTimerID == -1){
+            pageTimerID = setInterval(pageTick, 100);
+        }
+    };
+</script>
+
+{% endblock %}
